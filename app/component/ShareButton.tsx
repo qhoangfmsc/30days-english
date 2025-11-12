@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import GenerateButton, { LessonData } from "./GenerateButton";
 
 interface DayChallenge {
     day: number;
@@ -19,7 +20,6 @@ interface ShareButtonProps {
     day?: DayChallenge;
     isOpen?: boolean;
     onClose?: () => void;
-    defaultDay?: DayChallenge;
 }
 
 interface DiscordField {
@@ -28,7 +28,24 @@ interface DiscordField {
     inline?: boolean;
 }
 
-export default function ShareButton({ day, isOpen: externalIsOpen, onClose, defaultDay }: ShareButtonProps) {
+interface WebhookConfig {
+    name: string;
+    url: string;
+}
+
+// Discord webhook configuration
+const WEBHOOK_CONFIGS: WebhookConfig[] = [
+    {
+        name: "Test Ori",
+        url: "https://discord.com/api/webhooks/1402137172483768332/8irZRAm0m8XwI-QZ5JyqhsAYs5xA9uju5nVFclfYah1M2vJJpajrtgnJdxwpsIsSDYIe",
+    },
+    {
+        name: "Test 2 Ori",
+        url: "https://discord.com/api/webhooks/1420310534406017056/roWASFuVz_NCi1lXQq0J3jKSCrFqhrrov65o2b4sA-YqGVWtlPghosbtPOUox9MhG1y4",
+    },
+];
+
+export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: ShareButtonProps) {
     const [internalIsOpen, setInternalIsOpen] = useState(false);
     const [webhookUrl, setWebhookUrl] = useState("");
     const [isSending, setIsSending] = useState(false);
@@ -138,12 +155,11 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose, defa
     // Initialize editable day when modal opens
     useEffect(() => {
         if (isOpen) {
-            const dayToUse = defaultDay || day;
-            if (dayToUse) {
+            if (day) {
                 setEditableDay({
-                    ...dayToUse,
-                    newVocabulary: dayToUse.newVocabulary ? [...dayToUse.newVocabulary] : [],
-                    reviewVocabulary: dayToUse.reviewVocabulary ? [...dayToUse.reviewVocabulary] : [],
+                    ...day,
+                    newVocabulary: day.newVocabulary ? [...day.newVocabulary] : [],
+                    reviewVocabulary: day.reviewVocabulary ? [...day.reviewVocabulary] : [],
                 });
             } else {
                 // Create default empty day if no day provided
@@ -156,11 +172,26 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose, defa
                     reviewVocabulary: [],
                 });
             }
+            // Reset status when modal opens
+            setSendStatus(null);
         } else {
             setEditableDay(null);
+            setSendStatus(null);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen, defaultDay]);
+    }, [isOpen]);
+
+    const handleGenerateData = (generatedData: LessonData) => {
+        // Merge generated data with existing editableDay, keeping the day number if it exists
+        setEditableDay((prev) => ({
+            day: prev?.day || 1,
+            tense: generatedData.tense || "",
+            vietnameseText: generatedData.vietnameseText || "",
+            englishText: generatedData.englishText || "",
+            newVocabulary: generatedData.newVocabulary || [],
+            reviewVocabulary: generatedData.reviewVocabulary || [],
+        }));
+    };
 
     const handleSend = async () => {
         if (!webhookUrl.trim() || !editableDay) {
@@ -290,27 +321,33 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose, defa
                             <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
                                 Share to Discord
                             </h2>
-                            <button
-                                onClick={() => {
-                                    setIsOpen(false);
-                                    setSendStatus(null);
-                                }}
-                                className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors"
-                            >
-                                <svg
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
+                            <div className="flex items-center gap-3">
+                                <GenerateButton 
+                                    onGenerate={handleGenerateData} 
+                                    showStatus={false}
+                                />
+                                <button
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        setSendStatus(null);
+                                    }}
+                                    className="text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
+                                    <svg
+                                        className="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
 
                         {/* Content */}
@@ -320,6 +357,7 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose, defa
                                 <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                                     Discord Webhook URL
                                 </label>
+
                                 <input
                                     type="text"
                                     value={webhookUrl}
@@ -327,19 +365,31 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose, defa
                                     placeholder="https://discord.com/api/webhooks/..."
                                     className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                                 />
-                                <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                                    Nhập Discord webhook URL để gửi thử thách
-                                </p>
+
+                                {/* Webhook Badges */}
+                                {WEBHOOK_CONFIGS.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mb-2">
+                                        {WEBHOOK_CONFIGS.map((config, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => setWebhookUrl(config.url)}
+                                                className={`px-3 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${webhookUrl === config.url
+                                                        ? "bg-indigo-600 text-white shadow-md"
+                                                        : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 border border-zinc-300 dark:border-zinc-700"
+                                                    }`}
+                                                title={`Click to use: ${config.name}`}
+                                            >
+                                                {config.name}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
+
 
                             {/* Editable Day Data */}
                             {editableDay && (
                                 <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                                            Chỉnh sửa dữ liệu thử thách
-                                        </label>
-                                    </div>
 
                                     {/* Day Number */}
                                     <div className="space-y-2">

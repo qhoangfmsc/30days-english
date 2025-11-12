@@ -38,7 +38,7 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await fetch("/api/create", {
+      const response = await fetch("/api/create15days", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -125,14 +125,6 @@ export default function Home() {
           <ShareButton
             isOpen={isShareModalOpen}
             onClose={() => setIsShareModalOpen(false)}
-            defaultDay={{
-              day: 1,
-              tense: "",
-              vietnameseText: "",
-              englishText: "",
-              newVocabulary: [],
-              reviewVocabulary: [],
-            }}
           />
         </div>
       </main>
