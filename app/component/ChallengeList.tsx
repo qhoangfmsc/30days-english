@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ShareButton from "./ShareButton";
 
 interface DayChallenge {
   day: number;
@@ -39,10 +40,11 @@ export default function ChallengeList({ days }: ChallengeListProps) {
           >
             <div className="space-y-4">
               {/* 1. Ngày thứ */}
-              <div className="flex items-center gap-3 pb-3 border-b border-zinc-200 dark:border-zinc-700">
+              <div className="flex items-center justify-between gap-3 pb-3 border-b border-zinc-200 dark:border-zinc-700">
                 <span className="px-4 py-1.5 bg-linear-to-r from-blue-500 to-blue-600 text-white rounded-full text-sm font-bold shadow-sm">
                   Ngày {day.day}
                 </span>
+                <ShareButton day={day} />
               </div>
 
               {/* 2. Từ cần ôn */}
