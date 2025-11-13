@@ -22,7 +22,7 @@ const ScheduleSchema = z.object({
 
 export async function POST() {
   try {
-    const apiKey = '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';
+    const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
         { error: "OPENROUTER_API_KEY không được cấu hình" },
@@ -34,10 +34,10 @@ export async function POST() {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": 'localhost:1501',
-        "X-Title": "15 Days English",
+        "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+        "X-Title": "30 Days English",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         model: "openai/gpt-4.1-mini",
@@ -156,9 +156,22 @@ Learning Goals:
     });
 
     if (!response.ok) {
-      const errorData = await response.text();
+      let errorData;
+      try {
+        errorData = await response.json();
+      } catch {
+        errorData = await response.text();
+      }
+      console.error("OpenRouter API error:", {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorData,
+      });
       return NextResponse.json(
-        { error: `OpenRouter API error: ${errorData}` },
+        { 
+          error: `OpenRouter API error: ${response.status} ${response.statusText}`,
+          details: errorData 
+        },
         { status: response.status }
       );
     }
