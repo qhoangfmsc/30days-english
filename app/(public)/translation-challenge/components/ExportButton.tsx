@@ -1,23 +1,7 @@
 "use client";
 
 import * as XLSX from "xlsx";
-
-interface DayChallenge {
-  day: number;
-  tense: string;
-  vietnameseText: string;
-  englishText: string;
-  newVocabulary: {
-    word: string;
-    type: string;
-    translation: string;
-  }[];
-  reviewVocabulary: string[];
-}
-
-interface ExportButtonProps {
-  days: DayChallenge[];
-}
+import type { ExportButtonProps } from "../common/type";
 
 export default function ExportButton({ days }: ExportButtonProps) {
   const handleExportToExcel = () => {

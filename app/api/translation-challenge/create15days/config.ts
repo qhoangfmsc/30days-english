@@ -7,8 +7,8 @@ export const ScheduleSchema = z.object({
       day: z.number().describe("Day number from 1 to 15"),
       goal: z.string().describe("Goal of the day"),
       tense: z.string().describe("Tense used (or 'Mixed Tenses' if multiple)"),
-      vietnameseText: z.string().describe("Vietnamese paragraph (80-120 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary"),
-      englishText: z.string().describe("English translation (80-120 words). Must naturally include all words from newVocabulary within the paragraph"),
+      vietnameseText: z.string().describe("Vietnamese short paragraph (20-40 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary"),
+      englishText: z.string().describe("English short paragraph (20-40 words). Must naturally include all words from newVocabulary within the paragraph"),
       newVocabulary: z.array(z.object({
         word: z.string().describe("A word from the englishText paragraph that students will learn. If the word is a verb, use the infinitive form (base form), not conjugated forms. For example, if the paragraph contains 'played', use 'play'"),
         type: z.string().describe("The type of the word (e.g. noun, verb, adjective, adverb, preposition, conjunction, interjection)"),
@@ -34,7 +34,7 @@ export const SYSTEM_PROMPT = "You are a English teacher creating a 15-day challe
 export const USER_PROMPT = `Create a 15-day Vietnamese to English translation course for IELTS 5.0.
 
 Course Structure:
-- Each day includes a medium paragraph (80-120 words) in Vietnamese with its English translation
+- Each day includes a short paragraph (20-40 words) in Vietnamese with its English translation
 - Cover 12 tenses across 15 days (mix tenses when appropriate, label as "Mixed Tenses")
 - Focus on IELTS Writing Task 2 style at band 5.0 complexity
 - Keep paragraphs concise but meaningful
@@ -79,11 +79,11 @@ export const JSON_SCHEMA = {
           },
           vietnameseText: {
             type: "string",
-            description: "Vietnamese paragraph (80-120 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
+            description: "Vietnamese short paragraph (20-40 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
           },
           englishText: {
             type: "string",
-            description: "English translation (80-120 words). Must naturally include all words from newVocabulary within the paragraph",
+            description: "English short paragraph (20-40 words). Must naturally include all words from newVocabulary within the paragraph",
           },
           newVocabulary: {
             type: "array",

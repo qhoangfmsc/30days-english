@@ -1,36 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import GenerateButton, { LessonData } from "./GenerateButton";
-
-interface DayChallenge {
-    day: number;
-    tense: string;
-    vietnameseText: string;
-    englishText: string;
-    newVocabulary: {
-        word: string;
-        type: string;
-        translation: string;
-    }[];
-    reviewVocabulary: string[];
-}
-
-interface ShareButtonProps {
-    day?: DayChallenge;
-    isOpen?: boolean;
-    onClose?: () => void;
-}
+import GenerateButton from "./GenerateButton";
+import type { ShareButtonProps, DayChallenge, LessonData, WebhookConfig } from "../common/type";
 
 interface DiscordField {
     name: string;
     value: string;
     inline?: boolean;
-}
-
-interface WebhookConfig {
-    name: string;
-    url: string;
 }
 
 // Discord webhook configuration
@@ -142,7 +119,7 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: Sh
 
         const embed = {
             title: `📅 Day ${dayData.day} Challenge`,
-            description: `Translate the following sentence into English using the **${dayData.tense}** tense!`,
+            description: dayData.description || `Translate the following sentence into English using the **${dayData.tense}**!`,
             color: 0x0C8C5F,
             fields: fields,
             footer: {
@@ -162,6 +139,7 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: Sh
             if (day) {
                 setEditableDay({
                     ...day,
+                    description: day.description || `Translate the following sentence into English using the **${day.tense}**!`,
                     newVocabulary: day.newVocabulary ? [...day.newVocabulary] : [],
                     reviewVocabulary: day.reviewVocabulary ? [...day.reviewVocabulary] : [],
                 });
@@ -172,6 +150,7 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: Sh
                     tense: "",
                     vietnameseText: "",
                     englishText: "",
+                    description: "",
                     newVocabulary: [],
                     reviewVocabulary: [],
                 });
@@ -187,14 +166,18 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: Sh
 
     const handleGenerateData = (generatedData: LessonData) => {
         // Merge generated data with existing editableDay, keeping the day number if it exists
-        setEditableDay((prev) => ({
-            day: prev?.day || 1,
-            tense: generatedData.tense || "",
-            vietnameseText: generatedData.vietnameseText || "",
-            englishText: generatedData.englishText || "",
-            newVocabulary: generatedData.newVocabulary || [],
-            reviewVocabulary: generatedData.reviewVocabulary || [],
-        }));
+        setEditableDay((prev) => {
+            const tense = generatedData.tense || "";
+            return {
+                day: prev?.day || 1,
+                tense: tense,
+                vietnameseText: generatedData.vietnameseText || "",
+                englishText: generatedData.englishText || "",
+                description: prev?.description || `Translate the following sentence into English using the **${tense}**!`,
+                newVocabulary: generatedData.newVocabulary || [],
+                reviewVocabulary: generatedData.reviewVocabulary || [],
+            };
+        });
     };
 
     const handleSend = async () => {
@@ -222,7 +205,6 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: Sh
             if (response.ok) {
                 setSendStatus("success");
                 setTimeout(() => {
-                    setIsOpen(false);
                     setSendStatus(null);
                 }, 2000);
             } else {
@@ -425,9 +407,29 @@ export default function ShareButton({ day, isOpen: externalIsOpen, onClose }: Sh
                                                 setEditableDay({
                                                     ...editableDay,
                                                     tense: e.target.value,
+                                                    description: editableDay.description || `Translate the following sentence into English using the **${e.target.value}**!`,
                                                 })
                                             }
                                             className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                        />
+                                    </div>
+
+                                    {/* Description */}
+                                    <div className="space-y-2">
+                                        <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400">
+                                            Description
+                                        </label>
+                                        <textarea
+                                            value={editableDay.description || `Translate the following sentence into English using the **${editableDay.tense}**!`}
+                                            onChange={(e) =>
+                                                setEditableDay({
+                                                    ...editableDay,
+                                                    description: e.target.value,
+                                                })
+                                            }
+                                            rows={2}
+                                            className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-sm text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-y"
+                                            placeholder="Translate the following sentence into English using the **tense**!"
                                         />
                                     </div>
 

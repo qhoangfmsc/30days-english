@@ -1,19 +1,7 @@
 "use client";
 
 import ChallengeList from "./ChallengeList";
-
-interface DayChallenge {
-  day: number;
-  tense: string;
-  vietnameseText: string;
-  englishText: string;
-  newVocabulary: {
-    word: string;
-    type: string;
-    translation: string;
-  }[];
-  reviewVocabulary: string[];
-}
+import type { DayChallenge } from "../common/type";
 
 export default function MockupData() {
   // Mock data để mô phỏng data thật

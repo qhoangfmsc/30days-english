@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+---
+
+# Coding Structure
+
+## Nguyên tắc tổ chức code
+
+Tất cả các tính năng phải được tổ chức theo cấu trúc module như sau:
+
+## Cấu trúc thư mục
+
+```
+app/
+├── api/                          # API routes - xử lý các endpoint
+│   ├── [feature-name]/
+│   │   ├── route.ts              # Route handler
+│   │   └── config.ts             # Configuration (nếu cần)
+│
+└── (public)/                     # Mọi module và trang đều được viết trong đây
+    ├── layout.tsx                # Layout chung cho các private routes
+    │
+    ├── translation-challenge/    # Module: Translation Challenge
+    │   ├── page.tsx              # Trang chính của module
+    │   ├── common/               # Shared code cho module này
+    │   │   ├── enum.ts           # Enumerations
+    │   │   ├── type.ts           # TypeScript types và interfaces
+    │   │   └── utils.ts          # Utility functions
+    │   └── components/           # Components riêng của module này
+    │       └── [ComponentName].tsx
+    │
+    └── reading-challenge/        # Module: Reading Challenge
+        ├── page.tsx              # Trang chính của module
+        ├── common/               # Shared code cho module này
+        │   ├── enum.ts
+        │   ├── type.ts
+        │   └── utils.ts
+        └── components/           # Components riêng của module này
+            └── [ComponentName].tsx
+```
+
+## Quy tắc
+
+1. **API Routes**: Tất cả API endpoints đặt trong `app/api/`, mỗi feature có folder riêng
+2. **Public Routes**: Các trang đặt trong `app/(public)/` như 1 dấu hiệu nhận biết
+3. **Module Structure**: Mỗi feature/module phải có cấu trúc:
+   - `page.tsx`: Trang chính
+   - `common/`: Chứa enum, type, utils dùng chung trong module
+   - `components/`: Chứa các component con của module
+4. **Naming**: 
+   - Components: PascalCase (ví dụ: `TranslationCard.tsx`)
+   - Files: camelCase cho utils, PascalCase cho components
+   - Folders: kebab-case (ví dụ: `translation-challenge`)
+
+

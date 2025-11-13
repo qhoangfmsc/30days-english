@@ -1,24 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-export interface LessonData {
-    tense: string;
-    vietnameseText: string;
-    englishText: string;
-    newVocabulary: {
-        word: string;
-        type: string;
-        translation: string;
-    }[];
-    reviewVocabulary?: string[];
-}
-
-interface GenerateButtonProps {
-    onGenerate: (data: LessonData) => void;
-    className?: string;
-    showStatus?: boolean;
-}
+import type { GenerateButtonProps, LessonData } from "../common/type";
 
 export default function GenerateButton({ onGenerate, className, showStatus = true }: GenerateButtonProps) {
     const [isGenerating, setIsGenerating] = useState(false);
@@ -38,7 +21,7 @@ export default function GenerateButton({ onGenerate, className, showStatus = tru
         updateStatus(null);
 
         try {
-            const response = await fetch("/api/create", {
+            const response = await fetch("/api/translation-challenge/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -145,4 +128,6 @@ export default function GenerateButton({ onGenerate, className, showStatus = tru
         </div>
     );
 }
+
+export type { LessonData };
 

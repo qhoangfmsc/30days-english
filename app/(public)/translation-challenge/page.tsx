@@ -1,32 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import ChallengeList from "./component/ChallengeList";
-import ExportButton from "./component/ExportButton";
-import MockupData from "./component/MockupData";
-import ShareButton from "./component/ShareButton";
+import ChallengeList from "./components/ChallengeList";
+import ExportButton from "./components/ExportButton";
+import MockupData from "./components/MockupData";
+import ShareButton from "./components/ShareButton";
+import type { ChallengeData } from "./common/type";
 
-interface DayChallenge {
-  day: number;
-  tense: string;
-  vietnameseText: string;
-  englishText: string;
-  newVocabulary: {
-    word: string;
-    type: string;
-    translation: string;
-  }[];
-  reviewVocabulary: string[];
-}
-
-interface ChallengeData {
-  success: boolean;
-  data: {
-    days: DayChallenge[];
-  };
-}
-
-export default function Home() {
+export default function TranslationChallengePage() {
   const [loading, setLoading] = useState(false);
   const [challengeData, setChallengeData] = useState<ChallengeData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +19,7 @@ export default function Home() {
     setError(null);
 
     try {
-      const response = await fetch("/api/create15days", {
+      const response = await fetch("/api/translation-challenge/create15days", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,3 +112,4 @@ export default function Home() {
     </div>
   );
 }
+

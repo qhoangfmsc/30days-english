@@ -1,0 +1,122 @@
+---
+alwaysApply: true
+---
+
+# Coding style
+
+## Thứ tự viết code trong Component
+
+Khi viết React component, phải tuân theo thứ tự sau:
+
+1. **Imports** - Tất cả các import statements
+2. **Type/Interface definitions** - TypeScript types và interfaces (nếu có)
+3. **Constants và biến** - Các biến, constants được khai báo ở top level
+4. **useState hooks** - Tất cả các useState hooks
+5. **useEffect hooks** - Tất cả các useEffect hooks
+6. **Other hooks** - Các custom hooks hoặc hooks khác (useMemo, useCallback, etc.)
+7. **Functions** - Các hàm xử lý logic, event handlers
+8. **Return statement** - JSX return
+
+### Ví dụ:
+
+```typescript
+import { useState, useEffect } from 'react';
+import { Button } from '@heroui/react';
+
+interface Props {
+  title: string;
+}
+
+const MAX_COUNT = 10;
+const DEFAULT_VALUE = 0;
+
+export const MyComponent = ({ title }: Props) => {
+  // 1. Constants và biến
+  const baseUrl = 'https://api.example.com';
+  
+  // 2. useState hooks
+  const [count, setCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // 3. useEffect hooks
+  useEffect(() => {
+    // Side effects
+  }, []);
+  
+  // 4. Other hooks (useMemo, useCallback, etc.)
+  const memoizedValue = useMemo(() => {
+    return count * 2;
+  }, [count]);
+  
+  // 5. Functions
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+  
+  const fetchData = async () => {
+    setIsLoading(true);
+    // Fetch logic
+    setIsLoading(false);
+  };
+  
+  // 6. Return statement
+  return (
+    <div>
+      <h1>{title}</h1>
+      <Button onClick={handleClick}>Click me</Button>
+    </div>
+  );
+};
+```
+
+## UI Libraries
+
+### Tailwind CSS
+- Sử dụng Tailwind CSS cho styling
+- Ưu tiên utility classes thay vì custom CSS
+- Sử dụng responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+
+### HeroUI (NextUI)
+- Sử dụng HeroUI components cho UI elements
+- Import từ `@heroui/react`
+- Sử dụng các component có sẵn: Button, Card, Input, Modal, etc.
+
+### Ví dụ kết hợp Tailwind và HeroUI:
+
+```typescript
+import { Button, Card, CardBody } from '@heroui/react';
+
+export const ExampleComponent = () => {
+  return (
+    <div className="container mx-auto p-4">
+      <Card className="max-w-md">
+        <CardBody className="space-y-4">
+          <h2 className="text-2xl font-bold">Title</h2>
+          <Button 
+            color="primary" 
+            className="w-full"
+            onClick={handleClick}
+          >
+            Click me
+          </Button>
+        </CardBody>
+      </Card>
+    </div>
+  );
+};
+```
+
+## Naming Conventions
+
+- **Components**: PascalCase (ví dụ: `ChallengeList.tsx`)
+- **Functions**: camelCase (ví dụ: `handleClick`, `fetchData`)
+- **Constants**: UPPER_SNAKE_CASE (ví dụ: `MAX_COUNT`, `API_URL`)
+- **Variables**: camelCase (ví dụ: `userName`, `isLoading`)
+- **Types/Interfaces**: PascalCase (ví dụ: `UserData`, `ApiResponse`)
+
+## Code Organization
+
+- Mỗi component nên có một mục đích rõ ràng
+- Tách logic phức tạp thành các hàm riêng biệt
+- Sử dụng early return để giảm nesting
+- Giữ component nhỏ gọn, dễ đọc và dễ maintain

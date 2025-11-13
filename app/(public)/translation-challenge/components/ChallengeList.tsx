@@ -2,23 +2,7 @@
 
 import { useState } from "react";
 import ShareButton from "./ShareButton";
-
-interface DayChallenge {
-  day: number;
-  tense: string;
-  vietnameseText: string;
-  englishText: string;
-  newVocabulary: {
-    word: string;
-    type: string;
-    translation: string;
-  }[];
-  reviewVocabulary: string[];
-}
-
-interface ChallengeListProps {
-  days: DayChallenge[];
-}
+import type { ChallengeListProps } from "../common/type";
 
 export default function ChallengeList({ days }: ChallengeListProps) {
   const [showExample, setShowExample] = useState<Record<number, boolean>>({});
