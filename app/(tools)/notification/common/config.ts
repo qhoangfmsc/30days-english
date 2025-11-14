@@ -24,9 +24,5 @@ export const CONTENT_TEMPLATES: ContentTemplate[] = [
     label: "Congratulations",
     content: "Congratulations on completing the challenge! Keep maintaining your learning habit! 🎉",
   },
-  {
-    label: "Announcement",
-    content: "Important announcement: Please pay attention and follow the instructions. 📢",
-  },
 ];
 
