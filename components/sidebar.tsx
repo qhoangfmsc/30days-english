@@ -5,8 +5,6 @@ import Link from "next/link";
 import { Button } from "@heroui/button";
 import clsx from "clsx";
 
-import { ThemeSwitch } from "@/components/theme-switch";
-
 export const Sidebar = () => {
   const pathname = usePathname();
 
@@ -27,7 +25,6 @@ export const Sidebar = () => {
         <Link href="/" className="flex items-center gap-2">
           <span className="font-bold text-xl">Daily English</span>
         </Link>
-        <ThemeSwitch />
       </div>
 
       <nav className="flex-1 p-4">
