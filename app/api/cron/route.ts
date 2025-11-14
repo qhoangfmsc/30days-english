@@ -45,7 +45,7 @@ export async function GET() {
     const message = `📅 **Báo cáo tổng ngày đã học Dịch thuật**
 Ngày bắt đầu học: ${formatDate(startDate)}
 Hôm nay: ${formatDate(today)}
-Tổng số ngày đã học: **${workingDays} ngày**`;
+Tổng số ngày đã học: **${workingDays - 1} ngày** (Chưa tính hôm nay)`;
 
     const response = await fetch(discordWebhookUrl, {
       method: "POST",
