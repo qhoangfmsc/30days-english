@@ -76,4 +76,3 @@ export const createChallenge = async (): Promise<Lesson> => {
 
   return validatedData;
 };
-
