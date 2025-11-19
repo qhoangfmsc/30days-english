@@ -96,9 +96,6 @@ export default function TranslationChallenge() {
   if (viewState === "loading") {
     return (
       <div className="flex flex-col gap-8">
-        <div>
-          <h1 className={title({ size: "sm" })}>Thử thách dịch thuật</h1>
-        </div>
         <div className="flex flex-col items-center justify-center gap-4 py-12">
           <Spinner color="primary" size="lg" />
           <p className="text-default-500">Đang tạo thử thách...</p>
@@ -118,7 +115,8 @@ export default function TranslationChallenge() {
         </Alert>
         <Button
           className="w-fit"
-          color="primary"
+          color="default"
+          variant="light"
           onPress={handleBackToSelection}
         >
           Quay lại
@@ -130,15 +128,16 @@ export default function TranslationChallenge() {
   if (viewState === "single" && lesson) {
     return (
       <div className="flex flex-col gap-8">
-        <div className="flex items-center justify-between">
-          <h1 className={title({ size: "lg" })}>Thử thách dịch thuật</h1>
+        <div className="flex items-center justify-start gap-2">
           <Button
             color="default"
-            variant="bordered"
+            variant="light"
             onPress={handleBackToSelection}
           >
-            Tạo mới
+            Thử thách dịch thuật
           </Button>
+          <div>/</div>
+          <h1 className={title({ size: "sm" })}>Thử thách đơn</h1>
         </div>
         <SingleChallengeDisplay lesson={lesson} />
       </div>
@@ -148,15 +147,16 @@ export default function TranslationChallenge() {
   if (viewState === "schedule" && schedule) {
     return (
       <div className="flex flex-col gap-8">
-        <div className="flex items-center justify-between">
-          <h1 className={title({ size: "lg" })}>Thử thách dịch thuật</h1>
+        <div className="flex items-center justify-start gap-2">
           <Button
             color="default"
-            variant="bordered"
+            variant="light"
             onPress={handleBackToSelection}
           >
-            Tạo mới
+            Thử thách dịch thuật
           </Button>
+          <div>/</div>
+          <h1 className={title({ size: "sm" })}>Thử thách 15 ngày</h1>
         </div>
         <Challenge15DaysDisplay schedule={schedule} />
       </div>
