@@ -5,11 +5,12 @@ import type { Schedule, ApiResponse } from "../common/type";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/button";
-import { Spinner } from "@heroui/spinner";
 import { Alert } from "@heroui/alert";
+import { Card, CardBody } from "@heroui/card";
 
 import { Challenge15DaysDisplay } from "../components/Challenge15DaysDisplay";
 
+import { Loading } from "@/components/Loading";
 import { title } from "@/components/primitives";
 
 export default function Create15DaysChallenge() {
@@ -49,14 +50,7 @@ export default function Create15DaysChallenge() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col items-center justify-center gap-4 py-12">
-          <Spinner color="primary" size="lg" />
-          <p className="text-default-500">Đang tạo thử thách...</p>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error && !schedule) {
@@ -113,15 +107,65 @@ export default function Create15DaysChallenge() {
         <h1 className={title({ size: "sm" })}>Thử thách 15 ngày</h1>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-4 py-12">
-        <Button
-          color="primary"
-          isLoading={isLoading}
-          size="lg"
-          onPress={handleCreate15DaysChallenge}
-        >
-          Tạo thử thách 15 ngày
-        </Button>
+      <div className="flex flex-col items-center justify-center gap-6 py-16">
+        <Card className="w-full bg-gradient-to-br from-yellow-50 via-indigo-50 to-red-50 border-none shadow-xl">
+          <CardBody className="p-12 flex flex-col items-center gap-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-2xl opacity-30 animate-pulse" />
+              <div className="relative text-8xl animate-bounce">📅</div>
+            </div>
+
+            <div className="flex flex-col items-center gap-4 text-center">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-red-400 bg-clip-text text-transparent">
+                Bắt đầu hành trình 15 ngày!
+              </h2>
+              <p className="text-lg text-default-600 max-w-md">
+                Tạo lịch học 15 ngày với các thử thách dịch thuật được tối ưu
+                hóa. Kiên trì mỗi ngày để đạt mục tiêu của bạn!
+              </p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 w-full max-w-md">
+              <div className="flex flex-col items-center gap-2 p-4 bg-white/60 rounded-xl backdrop-blur-sm">
+                <span className="text-3xl">🔥</span>
+                <span className="text-xs font-semibold text-center">
+                  15 Ngày
+                </span>
+                <span className="text-xs text-default-500 text-center">
+                  Liên tục
+                </span>
+              </div>
+              <div className="flex flex-col items-center gap-2 p-4 bg-white/60 rounded-xl backdrop-blur-sm">
+                <span className="text-3xl">📚</span>
+                <span className="text-xs font-semibold text-center">
+                  15 Bài
+                </span>
+                <span className="text-xs text-default-500 text-center">
+                  Học tập
+                </span>
+              </div>
+              <div className="flex flex-col items-center gap-2 p-4 bg-white/60 rounded-xl backdrop-blur-sm">
+                <span className="text-3xl">🎓</span>
+                <span className="text-xs font-semibold text-center">
+                  Tự động
+                </span>
+                <span className="text-xs text-default-500 text-center">
+                  Hàng ngày
+                </span>
+              </div>
+            </div>
+
+            <Button
+              className="bg-gradient-to-br from-yellow-500 to-red-400 text-white font-semibold text-lg px-12 py-4 h-auto hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
+              color="primary"
+              isLoading={isLoading}
+              size="md"
+              onPress={handleCreate15DaysChallenge}
+            >
+              {isLoading ? "Đang tạo..." : "🚀 Tạo thử thách 15 ngày"}
+            </Button>
+          </CardBody>
+        </Card>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export default function Home() {
       <div className="text-center max-w-2xl">
         <h1 className={title({ size: "lg" })}>
           Chào mừng đến với{" "}
-          <span className={title({ color: "blue", size: "lg" })}>
+          <span className={title({ color: "violet", size: "lg" })}>
             Daily English
           </span>
         </h1>

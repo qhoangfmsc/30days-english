@@ -42,9 +42,9 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <div className="flex h-screen">
+          <div className="flex h-screen bg-gradient-to-br from-blue-50 to-violet-100 ">
             <Sidebar />
-            <main className="flex-1 ml-64 p-8 overflow-y-auto bg-gradient-to-b from-gray-50 to-100">
+            <main className="flex-1 ml-64 p-8 overflow-y-auto bg-gradient-to-tl from-gray-100 to-white rounded-l-3xl border-l border-divider">
               {children}
             </main>
           </div>

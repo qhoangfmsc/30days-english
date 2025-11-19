@@ -12,6 +12,7 @@ import { Alert } from "@heroui/alert";
 
 import { SingleChallengeDisplay } from "../components/SingleChallengeDisplay";
 
+import { Loading } from "@/components/Loading";
 import { title } from "@/components/primitives";
 
 export default function CreateCustomChallenge() {
@@ -100,6 +101,10 @@ export default function CreateCustomChallenge() {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (lesson) {
     return (

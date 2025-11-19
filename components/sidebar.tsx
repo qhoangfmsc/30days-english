@@ -26,11 +26,14 @@ export const Sidebar = () => {
   ];
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 border-r border-divider bg-background flex flex-col">
-      <div className="flex items-center justify-between p-6 border-b border-divider">
-        <Link className="flex items-center gap-2" href="/">
+    <aside className="fixed left-0 top-0 h-screen w-64 flex flex-col">
+      <div className="flex items-center justify-between p-6 mx-4 border-b border-divider">
+        <Link
+          className="flex items-center gap-2 w-full justify-center"
+          href="/"
+        >
           <span
-            className={title({ color: "blue" })}
+            className={title({ color: "violet" })}
             style={{ fontSize: "1.5rem" }}
           >
             Daily English
