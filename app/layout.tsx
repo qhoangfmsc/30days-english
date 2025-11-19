@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { Providers } from "./providers";
 
 import { Sidebar } from "@/components/sidebar";
+import { PageTransition } from "@/components/PageTransition";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -45,7 +46,7 @@ export default function RootLayout({
           <div className="flex h-screen bg-gradient-to-br from-blue-50 to-violet-100 ">
             <Sidebar />
             <main className="flex-1 ml-64 p-8 overflow-y-auto bg-gradient-to-tl from-gray-100 to-white rounded-l-3xl border-l border-divider">
-              {children}
+              <PageTransition>{children}</PageTransition>
             </main>
           </div>
         </Providers>
