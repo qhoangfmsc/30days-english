@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@heroui/button";
 import clsx from "clsx";
 
+import { title } from "./primitives";
+
 export const Sidebar = () => {
   const pathname = usePathname();
 
@@ -27,7 +29,12 @@ export const Sidebar = () => {
     <aside className="fixed left-0 top-0 h-screen w-64 border-r border-divider bg-background flex flex-col">
       <div className="flex items-center justify-between p-6 border-b border-divider">
         <Link className="flex items-center gap-2" href="/">
-          <span className="font-bold text-xl">Daily English</span>
+          <span
+            className={title({ color: "blue" })}
+            style={{ fontSize: "1.5rem" }}
+          >
+            Daily English
+          </span>
         </Link>
       </div>
 
