@@ -29,6 +29,11 @@ export const Sidebar = () => {
       href: "/translation-challenge",
       icon: "heroicons:language",
     },
+    {
+      label: "Tìm câu đúng",
+      href: "/grammar-find-correct",
+      icon: "heroicons:clipboard-document-check",
+    },
   ];
 
   const toggleCollapse = () => {
