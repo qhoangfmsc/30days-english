@@ -7,12 +7,12 @@ export const LessonSchema = z.object({
   vietnameseText: z
     .string()
     .describe(
-      "Vietnamese short paragraph (45-55 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary and reviewVocabulary",
+      "Vietnamese short paragraph (30-40 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary and reviewVocabulary",
     ),
   englishText: z
     .string()
     .describe(
-      "English short paragraph (45-55 words). Must naturally include all words from newVocabulary and reviewVocabulary within the paragraph",
+      "English short paragraph (30-40 words). Must naturally include all words from newVocabulary and reviewVocabulary within the paragraph",
     ),
   newVocabulary: z
     .array(
@@ -79,7 +79,7 @@ Topic Selection:
 - The selected topic should be clearly reflected in the content of both Vietnamese and English paragraphs
 
 Lesson Structure:
-- Include a short paragraph (45-55 words) in Vietnamese with its English translation
+- Include a short paragraph (30-40 words) in Vietnamese with its English translation
 - Focus on IELTS Writing Task 2 style at band 6.0 complexity
 - Keep paragraph complex but meaningful
 - Content must be relevant to the selected topic
@@ -109,12 +109,12 @@ export const JSON_SCHEMA = {
     vietnameseText: {
       type: "string",
       description:
-        "Vietnamese short paragraph (45-55 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary and reviewVocabulary",
+        "Vietnamese short paragraph (30-40 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary and reviewVocabulary",
     },
     englishText: {
       type: "string",
       description:
-        "English short paragraph (45-55 words). Must naturally include all words from newVocabulary and reviewVocabulary within the paragraph",
+        "English short paragraph (30-40 words). Must naturally include all words from newVocabulary and reviewVocabulary within the paragraph",
     },
     newVocabulary: {
       type: "array",
