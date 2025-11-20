@@ -9,12 +9,12 @@ export const LessonSchema = z.object({
   vietnameseText: z
     .string()
     .describe(
-      "Vietnamese short paragraph (30-40 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
+      "Vietnamese short paragraph (25-35 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
     ),
   englishText: z
     .string()
     .describe(
-      "English short paragraph (30-40 words). Must naturally include all words from newVocabulary within the paragraph",
+      "English short paragraph (25-35 words). Must naturally include all words from newVocabulary within the paragraph",
     ),
   newVocabulary: z
     .array(
@@ -64,7 +64,7 @@ ${CONFIG_TOPIC.MEDIUM_TOPICS}
 - The selected topic should be clearly reflected in the content of both Vietnamese and English paragraphs
 
 Lesson Structure:
-- Include a short paragraph (30-40 words) in Vietnamese with its English translation
+- Include a short paragraph (25-35 words) in Vietnamese with its English translation
 - Use appropriate tenses (can be a single tense or mixed tenses, label as "Mixed Tenses" if multiple)
 - Focus on IELTS Writing Task 2 style at band 5.0 complexity
 - Keep paragraph complex but meaningful
@@ -94,12 +94,12 @@ export const JSON_SCHEMA = {
     vietnameseText: {
       type: "string",
       description:
-        "Vietnamese short paragraph (30-40 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
+        "Vietnamese short paragraph (25-35 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
     },
     englishText: {
       type: "string",
       description:
-        "English short paragraph (30-40 words). Must naturally include all words from newVocabulary within the paragraph",
+        "English short paragraph (25-35 words). Must naturally include all words from newVocabulary within the paragraph",
     },
     newVocabulary: {
       type: "array",
