@@ -27,12 +27,12 @@ export const LessonSchema = z.object({
   vietnameseText: z
     .string()
     .describe(
-      "Vietnamese short paragraph (25-35 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
+      "Vietnamese short paragraph (20-30 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
     ),
   englishText: z
     .string()
     .describe(
-      "English short paragraph (25-35 words). Must naturally include all words from newVocabulary within the paragraph",
+      "English short paragraph (20-30 words). Must naturally include all words from newVocabulary within the paragraph",
     ),
   newVocabulary: z
     .array(
@@ -53,7 +53,7 @@ export const LessonSchema = z.object({
       }),
     )
     .describe(
-      "List of at least 4 and not over 6 new vocabulary words. Each word must appear in the englishText paragraph, and its Vietnamese translation must appear in the vietnameseText paragraph. MANDATORY: All words at CEFR level B1, B2, C1, or C2 in the paragraph must be included. Verbs must be in infinitive form (base form)",
+      "List of at least 2 and not over 4 new vocabulary words. Each word must appear in the englishText paragraph, and its Vietnamese translation must appear in the vietnameseText paragraph. MANDATORY: All words at CEFR level B1, B2, C1, or C2 in the paragraph must be included. Verbs must be in infinitive form (base form)",
     ),
   reviewVocabulary: z
     .array(z.string())
@@ -105,26 +105,23 @@ export const buildUserPrompt = (
   return `Create a Vietnamese to English translation lesson for IELTS 5.0.
 
 Topic Selection:
-- Use the following specific topic and go deeper into it, making it more complex:
-  * ${topic}
+- Use the following specific topic and go deeper into it, making it more complex: ${topic}
 - The selected topic should be clearly reflected in the content of both Vietnamese and English paragraphs
 
 Sentence Structure Requirement:
-- The paragraph MUST naturally incorporate and demonstrate the following sentence structure:
-  * ${sentenceStructure}
+- The paragraph MUST naturally incorporate and demonstrate the following sentence structure: ${sentenceStructure}
 - This structure should appear naturally in the English paragraph and be appropriately translated in the Vietnamese paragraph
 - The structure should be used correctly and meaningfully within the context of the topic
 
 Lesson Structure:
-- Include a short paragraph (25-35 words) in Vietnamese with its English translation
-- Use appropriate tenses (can be a single tense or mixed tenses, label as "Mixed Tenses" if multiple)
+- Include a short paragraph (20-30 words) in Vietnamese with its English translation
 - Focus on IELTS Writing Task 2 style at band 5.0 complexity
 - Keep paragraph complex but meaningful
 - Content must be relevant to the selected topic
 - The paragraph must demonstrate the required sentence structure: ${sentenceStructure}
 
 Vocabulary Requirements:
-- Select at least 4 and not over 6 new vocabulary words that appear naturally in the English paragraph
+- Select at least 2 and not over 4 new vocabulary words that appear naturally in the English paragraph
 - Each new word must be present in the englishText paragraph
 - The Vietnamese translation of each new word must appear in the vietnameseText paragraph
 - Any word that belongs to CEFR level B1, B2, C1, or C2 MUST be included in newVocabulary (can ignore A1 and A2 level words if it's not relevant to the topic)
@@ -142,14 +139,14 @@ ${CONFIG_TOPIC.MEDIUM_TOPICS}
 - The selected topic should be clearly reflected in the content of both Vietnamese and English paragraphs
 
 Lesson Structure:
-- Include a short paragraph (25-35 words) in Vietnamese with its English translation
+- Include a short paragraph (20-30 words) in Vietnamese with its English translation
 - Use appropriate tenses (can be a single tense or mixed tenses, label as "Mixed Tenses" if multiple)
 - Focus on IELTS Writing Task 2 style at band 5.0 complexity
 - Keep paragraph complex but meaningful
 - Content must be relevant to the selected topic
 
 Vocabulary Requirements:
-- Select at least 4 and not over 6 new vocabulary words that appear naturally in the English paragraph
+- Select at least 2 and not over 4 new vocabulary words that appear naturally in the English paragraph
 - Each new word must be present in the englishText paragraph
 - The Vietnamese translation of each new word must appear in the vietnameseText paragraph
 - Any word that belongs to CEFR level B1, B2, C1, or C2 MUST be included in newVocabulary (can ignore A1 and A2 level words if it's not relevant to the topic)
@@ -172,12 +169,12 @@ export const JSON_SCHEMA = {
     vietnameseText: {
       type: "string",
       description:
-        "Vietnamese short paragraph (25-35 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
+        "Vietnamese short paragraph (20-30 words) to translate. Must naturally include the Vietnamese translations corresponding to all words in newVocabulary",
     },
     englishText: {
       type: "string",
       description:
-        "English short paragraph (25-35 words). Must naturally include all words from newVocabulary within the paragraph",
+        "English short paragraph (20-30 words). Must naturally include all words from newVocabulary within the paragraph",
     },
     newVocabulary: {
       type: "array",
@@ -203,7 +200,7 @@ export const JSON_SCHEMA = {
         additionalProperties: false,
       },
       description:
-        "List of at least 4 and not over 6 new vocabulary words. Each word must appear in the englishText paragraph, and its Vietnamese translation must appear in the vietnameseText paragraph. MANDATORY: All words at CEFR level B1, B2, C1, or C2 in the paragraph must be included. Verbs must be in infinitive form (base form)",
+        "List of at least 2 and not over 4 new vocabulary words. Each word must appear in the englishText paragraph, and its Vietnamese translation must appear in the vietnameseText paragraph. MANDATORY: All words at CEFR level B1, B2, C1, or C2 in the paragraph must be included. Verbs must be in infinitive form (base form)",
     },
     reviewVocabulary: {
       type: "array",
