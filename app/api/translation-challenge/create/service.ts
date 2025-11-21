@@ -4,7 +4,9 @@ import {
   LessonSchema,
   API_CONFIG,
   SYSTEM_PROMPT,
-  USER_PROMPT,
+  buildUserPrompt,
+  selectTopic,
+  selectSentenceStructure,
   RESPONSE_FORMAT,
 } from "./config";
 
@@ -14,6 +16,20 @@ export const createChallenge = async (): Promise<Lesson> => {
   if (!apiKey) {
     throw new Error("OPENROUTER_API_KEY không được cấu hình");
   }
+
+  // Chọn topic và cấu trúc câu
+  const selectedTopic = selectTopic();
+  const selectedSentenceStructure = selectSentenceStructure();
+
+  // Log để theo dõi giá trị đã chọn
+  // eslint-disable-next-line no-console
+  console.log("🎲 Random Selection:", {
+    topic: selectedTopic,
+    sentenceStructure: selectedSentenceStructure,
+  });
+
+  // Tạo prompt với topic và cấu trúc câu đã chọn
+  const userPrompt = buildUserPrompt(selectedTopic, selectedSentenceStructure);
 
   // Gọi OpenRouter API với structured output
   const response = await fetch(API_CONFIG.url, {
@@ -34,7 +50,7 @@ export const createChallenge = async (): Promise<Lesson> => {
         },
         {
           role: "user",
-          content: USER_PROMPT,
+          content: userPrompt,
         },
       ],
       response_format: RESPONSE_FORMAT,
